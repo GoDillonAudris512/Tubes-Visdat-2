@@ -1,0 +1,146 @@
+@import "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css";
+
+/* Custom CSS for Layoffs Dashboard */
+
+/* Dashboard container */
+.container-fluid {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Cards styling */
+.card {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+/* KPI cards */
+.text-primary {
+    color: #2c3e50 !important;
+}
+
+.text-danger {
+    color: #e74c3c !important;
+}
+
+.text-success {
+    color: #27ae60 !important;
+}
+
+.text-info {
+    color: #3498db !important;
+}
+
+/* Filters */
+.dcc_control {
+    padding: 5px;
+    width: 100%;
+}
+
+/* Tabs styling */
+.nav-tabs {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #2c3e50;
+    color: #2c3e50;
+    background-color: transparent;
+}
+
+/* Data table */
+.dash-table-container {
+    margin-top: 20px;
+}
+
+/* Graphs */
+.dash-graph {
+    padding: 10px;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+}
+
+.btn-primary:hover {
+    background-color: #1a252f;
+    border-color: #1a252f;
+}
+
+/* Dropdown */
+.Select-control {
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+/* Footer */
+footer {
+    padding: 20px 0;
+}
+
+/* Custom overrides */
+.shadow-custom {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-hover:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Tab styling */
+.tab-selected {
+    border-bottom: 3px solid #2c3e50;
+    color: #2c3e50;
+}
+
+.tab-normal {
+    border-bottom: 3px solid transparent;
+    color: #6c757d;
+}
+
+/* Graph container */
+.graph-container {
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
