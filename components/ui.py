@@ -130,7 +130,7 @@ def create_filters(available_years, available_industries, available_countries):
             ],
             className="p-4",
         ),
-        className="bg-white rounded-lg shadow-custom card-hover mb-6",
+        className="  rounded-lg shadow-custom card-hover mb-6",
     )
 
     return filters
@@ -179,7 +179,7 @@ def create_kpi_cards(
                     ],
                     className="p-4 text-center",
                 ),
-                className="bg-white rounded-lg shadow-custom card-hover",
+                className="  rounded-lg shadow-custom card-hover",
             ),
             html.Div(
                 html.Div(
@@ -195,7 +195,7 @@ def create_kpi_cards(
                     ],
                     className="p-4 text-center",
                 ),
-                className="bg-white rounded-lg shadow-custom card-hover",
+                className="  rounded-lg shadow-custom card-hover",
             ),
             html.Div(
                 html.Div(
@@ -211,7 +211,7 @@ def create_kpi_cards(
                     ],
                     className="p-4 text-center",
                 ),
-                className="bg-white rounded-lg shadow-custom card-hover",
+                className="  rounded-lg shadow-custom card-hover",
             ),
             html.Div(
                 html.Div(
@@ -227,7 +227,7 @@ def create_kpi_cards(
                     ],
                     className="p-4 text-center",
                 ),
-                className="bg-white rounded-lg shadow-custom card-hover",
+                className="  rounded-lg shadow-custom card-hover",
             ),
         ],
         className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6",

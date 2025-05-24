@@ -15,25 +15,25 @@ def create_layout(df, available_years, available_industries, available_countries
     Returns:
         Component: Layout utama aplikasi
     """
-    
+
     # Tambahkan treemap
     treemap = html.Div(
         [
             html.Div(
                 [
                     html.H3(
-                        "Distribusi Layoffs berdasarkan Industri dan Negara",
-                        className="text-2xl font-bold text-gray-800 mb-4",
+                        "Layoffs Proportion",
+                        className="text-2xl font-bold text-[#E4A959] px-4",
                     ),
                     dcc.Graph(
                         id="treemap-chart",
-                        className="w-full h-[600px] rounded-lg shadow-lg",
+                        className="w-full py-0 px-2 rounded-lg shadow-lg",
                     ),
                 ],
-                className="w-full p-6  rounded-lg shadow-lg",
+                className="w-full p-6 rounded-lg shadow-lg",
             ),
         ],
-        className="w-full mb-8",
+        className="w-full",
     )
 
     layout = html.Div(
@@ -121,7 +121,7 @@ def create_layout(df, available_years, available_industries, available_countries
             # Store untuk menyimpan state filter
             dcc.Store(id="filter-store"),
             dcc.Store(id="active-tab", data="tab-1"),
-            treemap
+            treemap,
         ],
         className="min-h-screen bg-[#05050F]",
     )

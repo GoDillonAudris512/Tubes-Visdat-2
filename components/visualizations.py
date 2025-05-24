@@ -76,6 +76,8 @@ def create_layoffs_trend(
         template="plotly_white",
         margin=dict(l=20, r=20, t=80, b=20),
         height=500,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
     )
 
     # Set y-axes titles
@@ -157,6 +159,8 @@ def create_industry_chart(
         ),
         margin=dict(l=20, r=20, t=80, b=100),
         height=500,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
     )
 
     # Update x-axis
@@ -242,6 +246,8 @@ def create_companies_chart(
         ),
         margin=dict(l=20, r=20, t=80, b=200),
         height=550,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
     )
 
     # Update x-axis
@@ -369,14 +375,14 @@ def create_treemap(
 
     # Definisikan warna untuk setiap industri
     industry_colors = {
-        "Consumer": "#FF5A5F",  # Merah
-        "Retail": "#FFB400",  # Kuning
-        "Transportation": "#007A87",  # Biru
-        "Education": "#8CE071",  # Hijau
-        "Finance": "#7B0051",  # Ungu
-        "Healthcare": "#00D1C1",  # Turquoise
-        "Technology": "#4CAF50",  # Hijau
-        "Manufacturing": "#FFAA91",  # Oranye
+        "Hardware": "#9B1BFA",  # Merah
+        "Other": "#4DC0F4",  # Kuning
+        "Retail": "#FFA63E",  # Biru
+        "Transportation": "#FF2D2E",  # Hijau
+        "Finance": "#3F9729",  # Ungu
+        "Consumer": "#FFD63A",  # Turquoise
+        "Food": "#0C2E6B",  # Hijau
+        "Healthcare": "#D3d3d3",  # Oranye
     }
 
     # Siapkan list untuk menyimpan data treemap
@@ -457,10 +463,9 @@ def create_treemap(
         treemap_data,
         path=["industry", "company"],
         values="total_layoffs",
-        color="industry",  # Warna berdasarkan industri
-        color_discrete_map=industry_colors,  # Gunakan mapping warna yang sudah didefinisikan
+        color="industry",
+        color_discrete_map=industry_colors,
         hover_data=["total_layoffs", "country"],
-        title="Distribusi Layoffs berdasarkan Industri dan Perusahaan (Top 8 Industri)",
         labels={
             "total_layoffs": "Total Karyawan yang di-PHK",
             "country": "Negara",
@@ -469,16 +474,14 @@ def create_treemap(
 
     # Customize layout
     fig.update_layout(
-        title={
-            "y": 0.95,
-            "x": 0.5,
-            "xanchor": "center",
-            "yanchor": "top",
-            "font": dict(size=24, color="#2C3E50"),
-        },
-        template="plotly_white",
-        margin=dict(l=20, r=20, t=80, b=20),
-        height=600,
+        margin=dict(l=5, r=5, t=5, b=5),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        template="none",
     )
+
+    for d in fig.data:
+        if hasattr(d, "marker"):
+            d.marker.line = dict(color="white", width=0.5)
 
     return fig
