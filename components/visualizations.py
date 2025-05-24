@@ -283,22 +283,29 @@ def create_country_map(
     # Group by country
     country_data = (
         filtered_df.groupby("country")
-        .agg(total_layoffs=("total_laid_off", "sum"), companies=("company", "nunique"))
+        .agg(percentage_layoffs=("percentage_laid_off", "mean"), total_layoffs=("total_laid_off", "sum"), companies=("company", "nunique"))
         .reset_index()
     )
+
+    custom_colorscale = [
+        "#FFD6D6",  # paling muda dari FF2D2E
+        "#FF9999",
+        "#FF6666",
+        "#FF2D2E",  # paling tua/pekat
+    ]
 
     # Create figure
     fig = px.choropleth(
         country_data,
         locations="country",
         locationmode="country names",
-        color="total_layoffs",
+        color="percentage_layoffs",
         hover_name="country",
-        hover_data=["total_layoffs", "companies"],
-        color_continuous_scale="Plasma",
+        hover_data=["percentage_layoffs", "total_layoffs", "companies"],
+        color_continuous_scale=custom_colorscale,
         projection="natural earth",
-        title="Distribusi Layoffs di Seluruh Dunia",
-        labels={"total_layoffs": "Total Layoffs", "companies": "Jumlah Perusahaan"},
+        title="Layoff Rate Around the World",
+        labels={"country": "Country", "percentage_layoffs": "Layoffs Rate (%)", "total_layoffs": "Total Layoffs",  "companies": "Number of Company"},
     )
 
     # Customize layout
@@ -308,14 +315,18 @@ def create_country_map(
             "x": 0.5,
             "xanchor": "center",
             "yanchor": "top",
-            "font": dict(size=24, color="#2C3E50"),
+            "font": dict(size=24, color="#ffffff"),
         },
-        geo=dict(showframe=False, showcoastlines=True, projection_type="natural earth"),
+        geo=dict(showframe=False, showcoastlines=True, projection_type="natural earth",bgcolor='#1F1F43'),
         coloraxis_colorbar=dict(
-            title="Total<br>Layoffs",
+            title="Total<br>Layoffs<br>(%)",
         ),
         margin=dict(l=20, r=20, t=80, b=20),
         height=550,
+        paper_bgcolor='#1F1F43',
+        plot_bgcolor='#1F1F43', 
+        font_color='white',
+
     )
 
     return fig
