@@ -11,7 +11,7 @@ SECONDARY_COLOR = "#FF5A5F"
 SUCCESS_COLOR = "#27ae60"
 DANGER_COLOR = "#e74c3c"
 INFO_COLOR = "#3498db"
-BG_COLOR = "#f8f9fa"
+BG_COLOR = "#000000"
 
 # Konfigurasi visualisasi
 CHART_HEIGHT = 500

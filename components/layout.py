@@ -27,137 +27,58 @@ def create_layout(df, available_years, available_industries, available_countries
                     # Main content section
                     html.Div(
                         [
-                            # Filter sidebar
-                            html.Div(
-                                [
-                                    create_filters(
-                                        available_years,
-                                        available_industries,
-                                        available_countries,
-                                    ),
-                                ],
-                                className="w-full md:w-1/4 px-2",
-                            ),
                             # Visualizations
                             html.Div(
                                 [
                                     # Tabs for visualizations
                                     html.Div(
                                         [
-                                            # Tabs header
-                                            html.Div(
-                                                [
-                                                    html.Button(
-                                                        "Tren & Analisis",
-                                                        id="tab-1-btn",
-                                                        className="px-4 py-2 mr-2 tab-selected",
-                                                        n_clicks=0,
-                                                    ),
-                                                    html.Button(
-                                                        "Peta & Data",
-                                                        id="tab-2-btn",
-                                                        className="px-4 py-2 tab-normal",
-                                                        n_clicks=0,
-                                                    ),
-                                                ],
-                                                className="flex border-b mb-4",
-                                            ),
                                             # Tab content
                                             html.Div(
                                                 [
                                                     html.Div(
                                                         [
                                                             html.Div(
-                                                                dcc.Graph(
-                                                                    id="layoffs-trend"
-                                                                ),
-                                                                className="bg-white rounded-lg shadow-custom card-hover p-4 mb-6",
+                                                                [                                               
+                                                                    html.Div(
+                                                                        dcc.Graph(
+                                                                            id="country-map"
+                                                                        ),
+                                                                        className="bg-white rounded-lg shadow-custom card-hover p-4 mb-6",
+                                                                    ),
+                                                                    html.Div(
+                                                                        [
+                                                                            create_filters(
+                                                                                available_years,
+                                                                                available_industries,
+                                                                                available_countries,
+                                                                            ),
+                                                                        ],
+                                                                        className="w-1/3 px-2",
+                                                                    ),
+                                                                ],
+                                                                className="flex flex-wrap  w-full",
                                                             ),
                                                             html.Div(
                                                                 [
                                                                     html.Div(
                                                                         dcc.Graph(
-                                                                            id="industry-chart"
+                                                                            id="layoffs-trend"
                                                                         ),
-                                                                        className="bg-white rounded-lg shadow-custom card-hover p-4",
+                                                                        className=" bg-white rounded-lg shadow-custom card-hover p-4 mb-6",
                                                                     ),
                                                                     html.Div(
                                                                         dcc.Graph(
                                                                             id="companies-chart"
                                                                         ),
-                                                                        className="bg-white rounded-lg shadow-custom card-hover p-4",
+                                                                        className="bg-white rounded-lg shadow-custom card-hover p-4 ",
                                                                     ),
                                                                 ],
                                                                 className="grid grid-cols-1 md:grid-cols-2 gap-4",
                                                             ),
                                                         ],
                                                         id="tab-1-content",
-                                                        className="block",
-                                                    ),
-                                                    html.Div(
-                                                        [
-                                                            html.Div(
-                                                                dcc.Graph(
-                                                                    id="country-map"
-                                                                ),
-                                                                className="bg-white rounded-lg shadow-custom card-hover p-4 mb-6",
-                                                            ),
-                                                            html.Div(
-                                                                [
-                                                                    html.H4(
-                                                                        "Data Lengkap",
-                                                                        className="text-xl font-semibold mb-4",
-                                                                    ),
-                                                                    dash_table.DataTable(
-                                                                        id="data-table",
-                                                                        columns=[
-                                                                            {
-                                                                                "name": i,
-                                                                                "id": i,
-                                                                            }
-                                                                            for i in df.drop(
-                                                                                [
-                                                                                    "month",
-                                                                                    "year",
-                                                                                    "month_name",
-                                                                                    "year_month",
-                                                                                ],
-                                                                                axis=1,
-                                                                            ).columns
-                                                                        ],
-                                                                        page_size=10,
-                                                                        style_header={
-                                                                            "backgroundColor": "#2C3E50",
-                                                                            "color": "white",
-                                                                            "fontWeight": "bold",
-                                                                            "padding": "12px 15px",
-                                                                        },
-                                                                        style_data={
-                                                                            "whiteSpace": "normal",
-                                                                            "height": "auto",
-                                                                            "padding": "10px 15px",
-                                                                        },
-                                                                        style_cell={
-                                                                            "fontFamily": "Open Sans, sans-serif",
-                                                                            "textAlign": "left",
-                                                                        },
-                                                                        style_data_conditional=[
-                                                                            {
-                                                                                "if": {
-                                                                                    "row_index": "odd"
-                                                                                },
-                                                                                "backgroundColor": "#f8f9fa",
-                                                                            }
-                                                                        ],
-                                                                        filter_action="native",
-                                                                        sort_action="native",
-                                                                    ),
-                                                                ],
-                                                                className="bg-white rounded-lg shadow-custom card-hover p-4",
-                                                            ),
-                                                        ],
-                                                        id="tab-2-content",
-                                                        className="hidden",
+                                                        className="w-full",
                                                     ),
                                                 ],
                                                 id="tabs-content",
@@ -166,7 +87,7 @@ def create_layout(df, available_years, available_industries, available_countries
                                         id="tabs",
                                     ),
                                 ],
-                                className="w-full md:w-3/4 px-2",
+                                className="w-full px-2",
                             ),
                         ],
                         className="flex flex-wrap -mx-2",
