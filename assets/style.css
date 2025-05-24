@@ -138,3 +138,17 @@ footer {
     padding: 1rem;
     border-radius: 0.5rem;
 }
+
+.rc-slider-track {
+    background-color: #4DC0F4 !important;
+}
+
+.rc-slider-handle {
+    border-color: #4DC0F4 !important;
+    background-color: #4DC0F4 !important;
+    box-shadow: none !important;
+}
+
+.rc-slider-dot-active {
+    border-color: #4DC0F4 !important;
+}

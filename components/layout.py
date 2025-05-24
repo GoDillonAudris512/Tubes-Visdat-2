@@ -65,7 +65,7 @@ def create_layout(df, available_years, available_industries, available_countries
                                                                         dcc.Graph(
                                                                             id="country-map"
                                                                         ),
-                                                                        className="rounded-lg shadow-custom card-hover p-4 mb-6",
+                                                                        className="rounded-lg shadow-custom card-hover p-2 bg-[#1F1F43] mb-6",
                                                                     ),
                                                                     html.Div(
                                                                         [

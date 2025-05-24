@@ -55,7 +55,7 @@ def create_filters(available_years, available_industries, available_countries):
     filters = html.Div(
         html.Div(
             [
-                html.H4("Filter Data", className="text-lg font-semibold mb-3"),
+                html.H4("Filter Data", className="text-xl font-bold mb-3"),
                 html.Hr(className="mb-4"),
                 # Year Filter
                 html.Div(
@@ -70,7 +70,7 @@ def create_filters(available_years, available_industries, available_countries):
                             value=[min(available_years), max(available_years)],
                             marks={str(year): str(year) for year in available_years},
                             step=None,
-                            className="mb-1",
+                            className="mb-1 mt-5",
                         ),
                     ],
                     className="mb-4",
@@ -89,7 +89,8 @@ def create_filters(available_years, available_industries, available_countries):
                             ],
                             multi=True,
                             placeholder="Pilih industri...",
-                            className="mb-1",
+                            className="mb-1 text-[#1F1F43]",
+
                         ),
                     ],
                     className="mb-4",
@@ -107,7 +108,7 @@ def create_filters(available_years, available_industries, available_countries):
                             ],
                             multi=True,
                             placeholder="Pilih negara...",
-                            className="mb-1",
+                            className="mb-1 text-[#1F1F43]",
                         ),
                     ],
                     className="mb-4",
@@ -118,7 +119,7 @@ def create_filters(available_years, available_industries, available_countries):
                         html.Button(
                             "Terapkan Filter",
                             id="apply-filter-btn",
-                            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full",
+                            className="bg-[#4DC0F4] hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full",
                         ),
                         html.Div(id="filtered-data-stats", className="mt-3"),
                     ]
@@ -126,7 +127,7 @@ def create_filters(available_years, available_industries, available_countries):
             ],
             className="p-4",
         ),
-        className="  rounded-lg shadow-custom card-hover mb-6",
+        className="bg-[#1F1F43] text-white rounded-lg shadow-custom card-hover mb-6",
     )
 
     return filters

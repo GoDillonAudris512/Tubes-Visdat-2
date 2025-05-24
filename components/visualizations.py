@@ -294,10 +294,10 @@ def create_country_map(
     )
 
     custom_colorscale = [
-        "#FFD6D6",  # paling muda dari FF2D2E
+        "#FFD6D6",  # sangat terang
         "#FF9999",
-        "#FF6666",
-        "#FF2D2E",  # paling tua/pekat
+        "#FF4D4D",
+        "#FF2D2E"   # warna dasar
     ]
 
     # Create figure
