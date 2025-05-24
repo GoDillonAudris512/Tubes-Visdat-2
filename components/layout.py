@@ -44,7 +44,7 @@ def create_layout(df, available_years, available_industries, available_countries
             html.Div(
                 [
                     # KPI Cards
-                    html.Div(id="kpi-cards"),
+                    html.Div(id="statistics"),
                     # Main content section
                     html.Div(
                         [

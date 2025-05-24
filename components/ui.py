@@ -24,7 +24,7 @@ def create_header():
                         html.Div(
                             html.H1(
                                 "Global Layoffs Phenomenons",
-                                className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
+                                className="text-4xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
                             ),
                             className="ml-2",
                         ),
@@ -34,7 +34,7 @@ def create_header():
             ],
             className="container mx-auto px-4",
         ),
-        className="pt-8 pb-6",
+        className="pt-8 pb-4",
     )
 
     return header
@@ -148,89 +148,182 @@ def create_kpi_cards(
     Returns:
         Component: Komponen Dash row berisi KPI cards
     """
-    # Apply filters to get filtered dataframe
-    filtered_df = apply_filters(
-        df, selected_years, selected_industries, selected_countries
-    )
 
     # Calculate metrics
-    total_companies = filtered_df["company"].nunique()
-    total_layoffs = filtered_df["total_laid_off"].sum()
-    total_records = len(filtered_df)
-    avg_layoffs = filtered_df["total_laid_off"].mean()
+    total_records = len(df)
+    total_employee_layoffs = int(df["total_laid_off"].sum())
+    total_companies = df["company"].nunique()
+    total_countries = df["country"].nunique()
 
-    # Create KPI cards
-    kpi_cards = html.Div(
+    statistics = html.Div(
         [
             html.Div(
-                html.Div(
-                    [
-                        html.H6(
-                            "Total Perusahaan",
-                            className="text-sm text-gray-500 uppercase tracking-wider",
-                        ),
-                        html.H3(
-                            f"{total_companies:,}",
-                            className="text-2xl font-bold text-primary mt-2",
-                        ),
-                    ],
-                    className="p-4 text-center",
-                ),
-                className="  rounded-lg shadow-custom card-hover",
+                [
+                    html.H2(
+                        "General Statistics",
+                        className="text-2xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-1",
+                    ),
+                    html.H3(
+                        f"{total_records:,}",
+                        className="text-5xl text-white",
+                    ),
+                    html.H6(
+                        "Number of Layoffs",
+                        className="text-[14px] text-white mt-1",
+                    ),
+                ],
             ),
             html.Div(
-                html.Div(
-                    [
-                        html.H6(
-                            "Total Karyawan di-PHK",
-                            className="text-sm text-gray-500 uppercase tracking-wider",
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/employee_icon.png",
+                            className="h-16 w-auto",
                         ),
-                        html.H3(
-                            f"{total_layoffs:,.0f}",
-                            className="text-2xl font-bold text-danger mt-2",
-                        ),
-                    ],
-                    className="p-4 text-center",
-                ),
-                className="  rounded-lg shadow-custom card-hover",
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Employee Laid Off",
+                                className="text-[14px] text-[#7DB2BF]",
+                            ),
+                            html.H3(
+                                f"{total_employee_layoffs:,}",
+                                className="text-3xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-center items-center pt-8",
             ),
             html.Div(
-                html.Div(
-                    [
-                        html.H6(
-                            "Total Data",
-                            className="text-sm text-gray-500 uppercase tracking-wider",
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/company_icon.png",
+                            className="h-16 w-auto",
                         ),
-                        html.H3(
-                            f"{total_records:,}",
-                            className="text-2xl font-bold text-success mt-2",
-                        ),
-                    ],
-                    className="p-4 text-center",
-                ),
-                className="  rounded-lg shadow-custom card-hover",
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Company",
+                                className="text-[14px] text-[#C1AB7B]",
+                            ),
+                            html.H3(
+                                f"{total_companies:,}",
+                                className="text-3xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-center items-center pt-8",
             ),
             html.Div(
-                html.Div(
-                    [
-                        html.H6(
-                            "Rata-rata PHK",
-                            className="text-sm text-gray-500 uppercase tracking-wider",
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/country_icon.png",
+                            className="h-16 w-auto",
                         ),
-                        html.H3(
-                            f"{avg_layoffs:,.0f}",
-                            className="text-2xl font-bold text-info mt-2",
-                        ),
-                    ],
-                    className="p-4 text-center",
-                ),
-                className="  rounded-lg shadow-custom card-hover",
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Country",
+                                className="text-[14px] text-[#FAA743]",
+                            ),
+                            html.H3(
+                                f"{total_countries:,}",
+                                className="text-3xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-center items-center pt-8",
             ),
         ],
-        className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6",
+        id="statistics",
+        className="flex gap-10 justify-center mb-2",
     )
+    # # Create KPI cards
+    # kpi_cards = html.Div(
+    #     [
+    #         html.Div(
+    #             html.Div(
+    #                 [
+    #                     html.H6(
+    #                         "Total Perusahaan",
+    #                         className="text-sm text-gray-500 uppercase tracking-wider",
+    #                     ),
+    #                     html.H3(
+    #                         f"{total_companies:,}",
+    #                         className="text-2xl font-bold text-primary mt-2",
+    #                     ),
+    #                 ],
+    #                 className="p-4 text-center",
+    #             ),
+    #             className="  rounded-lg shadow-custom card-hover",
+    #         ),
+    #         html.Div(
+    #             html.Div(
+    #                 [
+    #                     html.H6(
+    #                         "Total Karyawan di-PHK",
+    #                         className="text-sm text-gray-500 uppercase tracking-wider",
+    #                     ),
+    #                     html.H3(
+    #                         f"{total_layoffs:,.0f}",
+    #                         className="text-2xl font-bold text-danger mt-2",
+    #                     ),
+    #                 ],
+    #                 className="p-4 text-center",
+    #             ),
+    #             className="  rounded-lg shadow-custom card-hover",
+    #         ),
+    #         html.Div(
+    #             html.Div(
+    #                 [
+    #                     html.H6(
+    #                         "Total Data",
+    #                         className="text-sm text-gray-500 uppercase tracking-wider",
+    #                     ),
+    #                     html.H3(
+    #                         f"{total_records:,}",
+    #                         className="text-2xl font-bold text-success mt-2",
+    #                     ),
+    #                 ],
+    #                 className="p-4 text-center",
+    #             ),
+    #             className="  rounded-lg shadow-custom card-hover",
+    #         ),
+    #         html.Div(
+    #             html.Div(
+    #                 [
+    #                     html.H6(
+    #                         "Rata-rata PHK",
+    #                         className="text-sm text-gray-500 uppercase tracking-wider",
+    #                     ),
+    #                     html.H3(
+    #                         f"{avg_layoffs:,.0f}",
+    #                         className="text-2xl font-bold text-info mt-2",
+    #                     ),
+    #                 ],
+    #                 className="p-4 text-center",
+    #             ),
+    #             className="  rounded-lg shadow-custom card-hover",
+    #         ),
+    #     ],
+    #     className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6",
+    # )
 
-    return kpi_cards
+    return statistics
 
 
 def create_footer():

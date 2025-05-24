@@ -41,7 +41,7 @@ def register_callbacks(app, df):
 
     # Callback untuk update KPI cards
     @app.callback(
-        Output("kpi-cards", "children"),
+        Output("statistics", "children"),
         [Input("filter-store", "data")],
         prevent_initial_call=False,
     )
