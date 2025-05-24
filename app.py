@@ -1,5 +1,9 @@
 import dash
 from dash import Dash
+import warnings
+
+# Filter warning dari Plotly
+warnings.filterwarnings("ignore", category=FutureWarning, module="_plotly_utils")
 
 # Import konfigurasi
 from config import APP_TITLE, DATA_PATH
