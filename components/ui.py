@@ -12,33 +12,29 @@ def create_header():
     header = html.Nav(
         html.Div(
             [
-                html.A(
-                    html.Div(
-                        [
-                            html.Div(
-                                html.Img(
-                                    src="https://img.icons8.com/fluency/48/null/organization-chart-people.png",
-                                    className="h-8 w-auto",
-                                ),
-                                className="flex-shrink-0",
+                html.Div(
+                    [
+                        html.Div(
+                            html.Img(
+                                src="https://img.icons8.com/fluency/48/null/organization-chart-people.png",
+                                className="h-10 w-auto",
                             ),
-                            html.Div(
-                                html.H1(
-                                    "Dashboard Visualisasi Data Layoffs",
-                                    className="text-xl text-blue-500 font-semibold",
-                                ),
-                                className="ml-2",
+                            className="flex-shrink-0",
+                        ),
+                        html.Div(
+                            html.H1(
+                                "Global Layoffs Phenomenons",
+                                className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
                             ),
-                        ],
-                        className="flex items-center",
-                    ),
-                    href="#",
-                    className="text-white",
+                            className="ml-2",
+                        ),
+                    ],
+                    className="flex justify-center items-center",
                 ),
             ],
             className="container mx-auto px-4",
         ),
-        className="text-white py-4 mb-6 shadow-md",
+        className="pt-8 pb-6",
     )
 
     return header
