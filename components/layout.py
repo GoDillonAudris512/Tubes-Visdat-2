@@ -101,7 +101,7 @@ def create_layout(df, available_years, available_industries, available_countries
             dcc.Store(id="filter-store"),
             dcc.Store(id="active-tab", data="tab-1"),
         ],
-        className="min-h-screen bg-gray-50",
+        className="min-h-screen bg-[#05050F]",
     )
 
     return layout
