@@ -319,3 +319,155 @@ def create_country_map(
     )
 
     return fig
+
+
+def create_treemap(
+    df, selected_years=None, selected_industries=None, selected_countries=None
+):
+    """
+    Membuat visualisasi treemap untuk melihat distribusi layoffs berdasarkan industri dan perusahaan
+    dengan 8 kategori industri terbesar dan maksimal 10 sub-bagian per industri (9 teratas + Others)
+
+    Args:
+        df (DataFrame): DataFrame berisi data layoffs
+        selected_years (list): Daftar tahun yang dipilih
+        selected_industries (list): Daftar industri yang dipilih
+        selected_countries (list): Daftar negara yang dipilih
+
+    Returns:
+        Figure: Objek Figure Plotly
+    """
+    from components.data_processor import apply_filters
+
+    # Apply filters
+    filtered_df = apply_filters(
+        df, selected_years, selected_industries, selected_countries
+    )
+
+    # Hitung total layoffs per industri
+    industry_totals = (
+        filtered_df.groupby("industry")
+        .agg(total_layoffs=("total_laid_off", "sum"))
+        .reset_index()
+        .sort_values("total_layoffs", ascending=False)
+    )
+
+    # Ambil top 8 industri
+    top_industries = industry_totals.head(8)
+    top_industry_list = top_industries["industry"].tolist()
+
+    # Definisikan warna untuk setiap industri
+    industry_colors = {
+        "Consumer": "#FF5A5F",  # Merah
+        "Retail": "#FFB400",  # Kuning
+        "Transportation": "#007A87",  # Biru
+        "Education": "#8CE071",  # Hijau
+        "Finance": "#7B0051",  # Ungu
+        "Healthcare": "#00D1C1",  # Turquoise
+        "Technology": "#4CAF50",  # Hijau
+        "Manufacturing": "#FFAA91",  # Oranye
+    }
+
+    # Siapkan list untuk menyimpan data treemap
+    treemap_rows = []
+
+    # Proses top 8 industri
+    for industry in top_industry_list:
+        # Filter data untuk industri ini
+        industry_data = filtered_df[filtered_df["industry"] == industry]
+
+        # Group by company untuk industri ini
+        company_data = (
+            industry_data.groupby("company")
+            .agg(
+                total_layoffs=("total_laid_off", "sum"),
+                country=("country", "first"),
+            )
+            .reset_index()
+        )
+
+        # Filter out zero values
+        company_data = company_data[company_data["total_layoffs"] > 0]
+
+        # Sort by total_layoffs descending
+        company_data = company_data.sort_values("total_layoffs", ascending=False)
+
+        # Ambil top 9 perusahaan
+        top_companies = company_data.head(9)
+
+        # Gabungkan sisanya ke dalam "Others"
+        if len(company_data) > 9:
+            others_data = company_data.iloc[9:]
+            others_total = others_data["total_layoffs"].sum()
+            others_countries = ", ".join(others_data["country"].unique())
+
+            # Tambahkan data top 9
+            for _, row in top_companies.iterrows():
+                treemap_rows.append(
+                    {
+                        "industry": industry,
+                        "company": row["company"],
+                        "total_layoffs": row["total_layoffs"],
+                        "country": row["country"],
+                        "color": industry_colors.get(
+                            industry, "#9E9E9E"
+                        ),  # Default abu-abu jika warna tidak ditemukan
+                    }
+                )
+
+            # Tambahkan data Others
+            treemap_rows.append(
+                {
+                    "industry": industry,
+                    "company": "Others",
+                    "total_layoffs": others_total,
+                    "country": others_countries,
+                    "color": industry_colors.get(industry, "#9E9E9E"),
+                }
+            )
+        else:
+            # Jika kurang dari 10 perusahaan, tambahkan semua
+            for _, row in company_data.iterrows():
+                treemap_rows.append(
+                    {
+                        "industry": industry,
+                        "company": row["company"],
+                        "total_layoffs": row["total_layoffs"],
+                        "country": row["country"],
+                        "color": industry_colors.get(industry, "#9E9E9E"),
+                    }
+                )
+
+    # Buat DataFrame dari list
+    treemap_data = pd.DataFrame(treemap_rows)
+
+    # Create figure
+    fig = px.treemap(
+        treemap_data,
+        path=["industry", "company"],
+        values="total_layoffs",
+        color="industry",  # Warna berdasarkan industri
+        color_discrete_map=industry_colors,  # Gunakan mapping warna yang sudah didefinisikan
+        hover_data=["total_layoffs", "country"],
+        title="Distribusi Layoffs berdasarkan Industri dan Perusahaan (Top 8 Industri)",
+        labels={
+            "total_layoffs": "Total Karyawan yang di-PHK",
+            "country": "Negara",
+        },
+    )
+
+    # Customize layout
+    fig.update_layout(
+        title={
+            "y": 0.95,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+            "font": dict(size=24, color="#2C3E50"),
+        },
+        template="plotly_white",
+        margin=dict(l=20, r=20, t=80, b=20),
+        height=600,
+    )
+
+    return fig

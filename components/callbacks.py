@@ -5,6 +5,7 @@ from components.visualizations import (
     create_industry_chart,
     create_companies_chart,
     create_country_map,
+    create_treemap,
 )
 from components.ui import create_kpi_cards
 from components.data_processor import apply_filters
@@ -117,3 +118,21 @@ def register_callbacks(app, df):
             create_companies_chart(df, years, industries, countries),
             create_country_map(df, years, industries, countries),
         )
+
+    # Callback untuk treemap
+    @app.callback(
+        Output("treemap-chart", "figure"),
+        [Input("filter-store", "data")],
+        prevent_initial_call=False,
+    )
+    def update_treemap(filter_data):
+        """Update treemap berdasarkan filter"""
+        if filter_data is None:
+            # Default treemap with all data
+            return create_treemap(df)
+
+        years = filter_data.get("years", None)
+        industries = filter_data.get("industries", None)
+        countries = filter_data.get("countries", None)
+
+        return create_treemap(df, years, industries, countries)

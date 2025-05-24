@@ -14,9 +14,12 @@ from components.layout import create_layout
 from components.callbacks import register_callbacks
 
 # Inisialisasi app tanpa Bootstrap
+external_scripts = [{"src": "https://cdn.tailwindcss.com"}]
+
 app = Dash(
     __name__,
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+    external_scripts=external_scripts,
 )
 
 # Konfigurasi aplikasi

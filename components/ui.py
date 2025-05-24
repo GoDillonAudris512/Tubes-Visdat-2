@@ -38,7 +38,7 @@ def create_header():
             ],
             className="container mx-auto px-4",
         ),
-        className="bg-primary text-white py-4 mb-6 shadow-md",
+        className="text-white py-4 mb-6 shadow-md",
     )
 
     return header
@@ -122,7 +122,7 @@ def create_filters(available_years, available_industries, available_countries):
                         html.Button(
                             "Terapkan Filter",
                             id="apply-filter-btn",
-                            className="bg-primary bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full",
+                            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full",
                         ),
                         html.Div(id="filtered-data-stats", className="mt-3"),
                     ]
