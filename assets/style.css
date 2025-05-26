@@ -140,12 +140,19 @@ footer {
 }
 
 .rc-slider-track {
-    background-color: #4DC0F4 !important;
+    background-image: linear-gradient(to right, #4DC0F4, #FFA63E) !important;
 }
 
-.rc-slider-handle {
+.rc-slider-handle:nth-of-type(1) {
     border-color: #4DC0F4 !important;
     background-color: #4DC0F4 !important;
+    box-shadow: none !important;
+}
+
+/* Styling untuk handle kedua (kanan) */
+.rc-slider-handle:nth-of-type(2) {
+    border-color: #FFA63E !important;
+    background-color: #FFA63E !important;
     box-shadow: none !important;
 }
 

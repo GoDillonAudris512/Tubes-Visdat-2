@@ -78,7 +78,7 @@ def create_layout(df, available_years, available_industries, available_countries
                                                                         className="w-1/3 px-2",
                                                                     ),
                                                                 ],
-                                                                className="flex flex-wrap  w-full",
+                                                                className="flex flex-wrap justify-center gap-5 w-full",
                                                             ),
                                                             html.Div(
                                                                 [

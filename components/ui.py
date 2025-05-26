@@ -250,7 +250,7 @@ def create_kpi_cards(
             ),
         ],
         id="statistics",
-        className="flex gap-10 justify-center mb-2",
+        className="flex gap-10 justify-center mb-5",
     )
     # # Create KPI cards
     # kpi_cards = html.Div(
