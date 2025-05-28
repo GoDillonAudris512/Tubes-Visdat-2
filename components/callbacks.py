@@ -3,7 +3,6 @@ import dash
 from components.visualizations import (
     create_layoffs_trend,
     create_industry_chart,
-    create_companies_chart,
     create_country_map,
     create_treemap,
 )
@@ -89,7 +88,6 @@ def register_callbacks(app, df):
     @app.callback(
         [
             Output("layoffs-trend", "figure"),
-            Output("companies-chart", "figure"),
             Output("country-map", "figure"),
         ],
         [Input("filter-store", "data")],
@@ -101,7 +99,6 @@ def register_callbacks(app, df):
             # Default visualizations with all data
             return (
                 create_layoffs_trend(df),
-                create_companies_chart(df),
                 create_country_map(df),
             )
 
@@ -115,7 +112,6 @@ def register_callbacks(app, df):
 
         return (
             create_layoffs_trend(df, years, industries, countries),
-            create_companies_chart(df, years, industries, countries),
             create_country_map(df, years, industries, countries),
         )
 

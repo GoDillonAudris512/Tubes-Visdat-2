@@ -15,26 +15,26 @@ def create_header():
                 html.Div(
                     [
                         html.Div(
+                            html.H1(
+                                "Global Layoffs Phenomenons",
+                                className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
+                            ),
+                            className="mr-2",
+                        ),
+                        html.Div(
                             html.Img(
                                 src="https://img.icons8.com/fluency/48/null/organization-chart-people.png",
                                 className="h-10 w-auto",
                             ),
                             className="flex-shrink-0",
                         ),
-                        html.Div(
-                            html.H1(
-                                "Global Layoffs Phenomenons",
-                                className="text-4xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
-                            ),
-                            className="ml-2",
-                        ),
                     ],
-                    className="flex justify-center items-center",
+                    className="flex justify-left items-center",
                 ),
             ],
-            className="container mx-auto px-4",
+            className="container px-8 w-full",
         ),
-        className="pt-8 pb-4",
+        className="py-3 bg-black",
     )
 
     return header
@@ -55,7 +55,7 @@ def create_filters(available_years, available_industries, available_countries):
     filters = html.Div(
         html.Div(
             [
-                html.H4("Filter Data", className="text-xl font-bold mb-3"),
+                html.H4("Filter Data", className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-2"),
                 html.Hr(className="mb-4"),
                 # Year Filter
                 html.Div(
@@ -127,7 +127,7 @@ def create_filters(available_years, available_industries, available_countries):
             ],
             className="p-4",
         ),
-        className="bg-[#1F1F43] text-white rounded-lg shadow-custom card-hover mb-6",
+        className="text-white rounded-lg shadow-custom card-hover mb-6",
     )
 
     return filters
@@ -161,15 +161,16 @@ def create_kpi_cards(
                 [
                     html.H2(
                         "General Statistics",
-                        className="text-2xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-1",
+                        className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold",
                     ),
+                    html.Hr(className="my-2 border-[#fffff]"),
                     html.H3(
                         f"{total_records:,}",
-                        className="text-5xl text-white",
+                        className="text-4xl text-white mt-2",
                     ),
                     html.H6(
                         "Number of Layoffs",
-                        className="text-[14px] text-white mt-1",
+                        className="text-[12px] text-white mt-1",
                     ),
                 ],
             ),
@@ -178,7 +179,7 @@ def create_kpi_cards(
                     html.Div(
                         html.Img(
                             src="assets/employee_icon.png",
-                            className="h-16 w-auto",
+                            className="h-12 w-auto",
                         ),
                         className="flex-shrink-0",
                     ),
@@ -190,20 +191,20 @@ def create_kpi_cards(
                             ),
                             html.H3(
                                 f"{total_employee_layoffs:,}",
-                                className="text-3xl text-white",
+                                className="text-2xl text-white",
                             ),
                         ],
                         className="flex-col ml-3 items-center justify-center",
                     ),
                 ],
-                className="flex justify-center items-center pt-8",
+                className="flex justify-left items-center pt-4",
             ),
             html.Div(
                 [
                     html.Div(
                         html.Img(
                             src="assets/company_icon.png",
-                            className="h-16 w-auto",
+                            className="h-12 w-auto",
                         ),
                         className="flex-shrink-0",
                     ),
@@ -215,20 +216,20 @@ def create_kpi_cards(
                             ),
                             html.H3(
                                 f"{total_companies:,}",
-                                className="text-3xl text-white",
+                                className="text-2xl text-white",
                             ),
                         ],
                         className="flex-col ml-3 items-center justify-center",
                     ),
                 ],
-                className="flex justify-center items-center pt-8",
+                className="flex justify-left items-center pt-4",
             ),
             html.Div(
                 [
                     html.Div(
                         html.Img(
                             src="assets/country_icon.png",
-                            className="h-16 w-auto",
+                            className="h-12 w-auto",
                         ),
                         className="flex-shrink-0",
                     ),
@@ -240,17 +241,17 @@ def create_kpi_cards(
                             ),
                             html.H3(
                                 f"{total_countries:,}",
-                                className="text-3xl text-white",
+                                className="text-2xl text-white",
                             ),
                         ],
                         className="flex-col ml-3 items-center justify-center",
                     ),
                 ],
-                className="flex justify-center items-center pt-8",
+                className="flex justify-left items-center pt-4",
             ),
         ],
         id="statistics",
-        className="flex gap-10 justify-center mb-5",
+        className="justify-left mb-2 px-8",
     )
     # # Create KPI cards
     # kpi_cards = html.Div(

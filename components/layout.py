@@ -33,7 +33,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 className="w-full p-6 rounded-lg shadow-lg",
             ),
         ],
-        className="w-full",
+        className="w-7/12",
     )
 
     layout = html.Div(
@@ -65,7 +65,7 @@ def create_layout(df, available_years, available_industries, available_countries
                                                                         dcc.Graph(
                                                                             id="country-map"
                                                                         ),
-                                                                        className="rounded-lg shadow-custom card-hover p-2 bg-[#1F1F43] mb-6",
+                                                                        className="rounded-lg shadow-custom card-hover p-2 bg-[#ffffff] mb-6 w-2/3",
                                                                     ),
                                                                     html.Div(
                                                                         [
@@ -75,10 +75,10 @@ def create_layout(df, available_years, available_industries, available_countries
                                                                                 available_countries,
                                                                             ),
                                                                         ],
-                                                                        className="w-1/3 px-2",
+                                                                        className="px-2 w-1/4",
                                                                     ),
                                                                 ],
-                                                                className="flex flex-wrap justify-center gap-5 w-full",
+                                                                className="flex flex-wrap justify-center gap-4",
                                                             ),
                                                             html.Div(
                                                                 [
@@ -86,16 +86,11 @@ def create_layout(df, available_years, available_industries, available_countries
                                                                         dcc.Graph(
                                                                             id="layoffs-trend"
                                                                         ),
-                                                                        className="  rounded-lg shadow-custom card-hover p-4 mb-6",
+                                                                        className="rounded-lg shadow-custom card-hover bg-[#1F1F43] mb-6 w-5/12",
                                                                     ),
-                                                                    html.Div(
-                                                                        dcc.Graph(
-                                                                            id="companies-chart"
-                                                                        ),
-                                                                        className=" rounded-lg shadow-custom card-hover p-4 ",
-                                                                    ),
+                                                                    treemap,
                                                                 ],
-                                                                className="grid grid-cols-1 md:grid-cols-2 gap-4",
+                                                                className="flex flex-wrap justify-center w-full",
                                                             ),
                                                         ],
                                                         id="tab-1-content",
@@ -121,9 +116,59 @@ def create_layout(df, available_years, available_industries, available_countries
             # Store untuk menyimpan state filter
             dcc.Store(id="filter-store"),
             dcc.Store(id="active-tab", data="tab-1"),
-            treemap,
         ],
         className="min-h-screen bg-[#05050F]",
+    )
+
+    layout = html.Div(
+        [
+            # Header
+            create_header(),
+            html.Div(
+                [
+                    html.Div(
+                        [
+                            html.Div(id="statistics"),
+                            html.Div(
+                                [
+                                    create_filters(
+                                        available_years,
+                                        available_industries,
+                                        available_countries,
+                                    ),
+                                ],
+                                className="w-full px-4",
+                            ),
+                        ],
+                        className="w-1/5"
+                    ),
+                    html.Div(
+                        [
+                            html.Div(
+                                dcc.Graph(
+                                    id="country-map"
+                                ),
+                                className="w-full",
+                            ),
+                            html.Div(
+                                dcc.Graph(
+                                    id="layoffs-trend"
+                                ),
+                                className="",
+                            ),
+                            treemap,
+                        ],
+                        className="w-4/5 h-screen overflow-y-scroll",
+                    )
+                ],
+                className="flex w-full pt-4",
+            ),
+
+            # Store untuk menyimpan state filter
+            dcc.Store(id="filter-store"),
+            dcc.Store(id="active-tab", data="tab-1"),
+        ],
+        className="bg-[#05050F] h-screen",
     )
 
     return layout
