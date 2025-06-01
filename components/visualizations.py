@@ -64,14 +64,6 @@ def create_layoffs_trend(
 
     # Customize layout
     fig.update_layout(
-        title={
-            "text": "Tren Layoffs Per Bulan",
-            "y": 0.95,
-            "x": 0.5,
-            "xanchor": "center",
-            "yanchor": "top",
-            "font": dict(size=24, color="#ffffff"),
-        },
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
         template="plotly_white",
         margin=dict(l=30, r=30, t=80, b=20),
