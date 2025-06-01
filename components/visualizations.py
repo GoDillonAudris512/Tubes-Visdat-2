@@ -74,9 +74,7 @@ def create_layoffs_trend(
     )
 
     # Set y-axes titles
-    fig.update_yaxes(
-        title_text="Total Layoffs", secondary_y=False, gridcolor="#808080"
-    )
+    fig.update_yaxes(title_text="Total Layoffs", secondary_y=False, gridcolor="#808080")
     fig.update_yaxes(
         title_text="Total Companies", secondary_y=True, gridcolor="#808080"
     )
@@ -129,6 +127,26 @@ def create_country_map(
         "#FF2D2E",  # warna dasar
     ]
 
+    # Definisikan hovertemplate yang lebih profesional
+    hovertemplate = (
+        # judul negara
+        "<span style='font-size:14px; font-weight:600; color:#FFFFFF;'>"
+        "%{hovertext}</span><br>"
+        # garis pemisah pakai blok span 1-px tinggi
+        "<span style='display:block; height:1px; "
+        "background:#4A4A70; margin:4px 0;'></span>"
+        # tingkat PHK
+        "<span style='color:#B0B0B0;'>Layoff Rate</span>: "
+        "<span style='font-weight:600; color:#FFFFFF;'>%{z:.2f}%</span><br>"
+        # total karyawan
+        "<span style='color:#B0B0B0;'>Total Affected</span>: "
+        "<span style='font-weight:600; color:#FFFFFF;'>%{customdata[1]:,} employees</span><br>"
+        # jumlah perusahaan
+        "<span style='color:#B0B0B0;'>Number of Companies</span>: "
+        "<span style='font-weight:600; color:#FFFFFF;'>%{customdata[2]}</span>"
+        "<extra></extra>"  # buang trace-name default
+    )
+
     # Create figure
     fig = px.choropleth(
         country_data,
@@ -136,17 +154,24 @@ def create_country_map(
         locationmode="country names",
         color="percentage_layoffs",
         hover_name="country",
-        hover_data=["percentage_layoffs", "total_layoffs", "companies"],
+        hover_data={
+            "percentage_layoffs": ":.2f",
+            "total_layoffs": ":,",
+            "companies": True,
+        },
         color_continuous_scale=custom_colorscale,
         range_color=(0, 100),
         projection="natural earth",
         labels={
-            "country": "Country",
-            "percentage_layoffs": "Layoffs Rate (%)",
-            "total_layoffs": "Total Layoffs",
-            "companies": "Number of Company",
+            "country": "Negara",
+            "percentage_layoffs": "Tingkat PHK (%)",
+            "total_layoffs": "Total Karyawan Terdampak",
+            "companies": "Jumlah Perusahaan",
         },
     )
+
+    # Terapkan hovertemplate kustom
+    fig.update_traces(hovertemplate=hovertemplate)
 
     # Customize layout
     fig.update_layout(
@@ -161,8 +186,8 @@ def create_country_map(
             showframe=False,
             showcoastlines=True,
             bgcolor="#1F1F43",
-            projection_scale=1.2,  # perbesar globe
-            center=dict(lat=10, lon=0),  # geser agar map lebih tengah
+            projection_scale=1.2,
+            center=dict(lat=10, lon=0),
         ),
         coloraxis_colorbar=dict(
             title=dict(
@@ -179,7 +204,7 @@ def create_country_map(
         margin=dict(l=20, r=20, t=20, b=0),
         paper_bgcolor="#1F1F43",
         plot_bgcolor="#1F1F43",
-        font_color="white",
+        font_color="#FFFFFF",
     )
 
     return fig
@@ -312,26 +337,38 @@ def create_treemap(
         values="total_layoffs",
         color="industry",
         color_discrete_map=industry_colors,
-        hover_data=["total_layoffs", "country"],
-        labels={
-            "total_layoffs": "Total Karyawan yang di-PHK",
-            "country": "Negara",
-        },
+        custom_data=["total_layoffs"],
     )
 
     # Customize layout
     fig.update_layout(
-        margin=dict(l=1, r=1, t=0, b=1),  # Buat margin sekecil mungkin, t=0
+        margin=dict(l=1, r=1, t=0, b=1),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        template="none",
-        uniformtext_minsize=8,  # Perkecil minsize text
+        uniformtext_minsize=8,
         uniformtext_mode="hide",
+        font_color="#FFFFFF",
     )
 
     # Update traces untuk mengontrol font dan posisi teks lebih detail
+    hovertemplate = (
+        "<span style='font-size:13px; font-weight:600;'>%{label}</span><br>"
+        "<span style='color:#B0B0B0;'>Total layoffs</span>: "
+        "<span style='font-weight:600;'>%{customdata[0]:,} employees</span><br>"
+        "<span style='color:#B0B0B0;'>Proportion</span>: "
+        "<span style='font-weight:600;'>%{percentParent:.1%}</span>"
+        "<extra></extra>"
+    )
+
     fig.update_traces(
-        textfont_size=10,  # Ukuran font untuk semua label di treemap
+        hovertemplate=hovertemplate,
+        hoverlabel=dict(
+            bgcolor="#26264F",
+            bordercolor="#FFFFFF",
+            font_size=12,
+            font_family="Arial, sans-serif",
+        ),
+        textfont_size=10,
         selector=dict(type="treemap"),
     )
 
