@@ -2,7 +2,6 @@ from dash import Input, Output, State, html
 import dash
 from components.visualizations import (
     create_layoffs_trend,
-    create_industry_chart,
     create_country_map,
     create_treemap,
 )
@@ -36,34 +35,6 @@ def register_callbacks(app, df):
 
         years = list(range(year_range[0], year_range[1] + 1))
         return {"years": years, "industries": industries, "countries": countries}
-
-    # # Callback untuk update filtered data stats
-    # @app.callback(
-    #     Output("filtered-data-stats", "children"),
-    #     [Input("filter-store", "data")],
-    #     prevent_initial_call=False,
-    # )
-    # def update_filter_stats(filter_data):
-    #     """Update statistik data terfilter"""
-    #     if filter_data is None:
-    #         return "Menampilkan semua data"
-
-    #     filtered_df = df.copy()
-
-    #     years = filter_data.get("years", None)
-    #     industries = filter_data.get("industries", None)
-    #     countries = filter_data.get("countries", None)
-
-    #     filtered_df = apply_filters(filtered_df, years, industries, countries)
-
-    #     return html.Div(
-    #         [
-    #             html.P(
-    #                 f"Menampilkan {len(filtered_df)} data",
-    #                 className="text-primary font-bold",
-    #             ),
-    #         ]
-    #     )
 
     # Callback untuk update visualisasi
     @app.callback(
