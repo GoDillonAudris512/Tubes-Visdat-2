@@ -15,6 +15,111 @@ def create_layout(df, available_years, available_industries, available_countries
     Returns:
         Component: Layout utama aplikasi
     """
+    # Calculate metrics
+    total_records = len(df)
+    total_employee_layoffs = int(df["total_laid_off"].sum())
+    total_companies = df["company"].nunique()
+    total_countries = df["country"].nunique()
+
+    # Tambahkan statistik
+    statistics = html.Div(
+        [
+            html.Div(
+                [
+                    html.H2(
+                        "General Statistics",
+                        className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold",
+                    ),
+                    html.Hr(className="my-2 border-[#fffff]"),
+                    html.H3(
+                        f"{total_records:,}",
+                        className="text-4xl text-white mt-2",
+                    ),
+                    html.H6(
+                        "Number of Layoffs",
+                        className="text-[12px] text-white mt-1",
+                    ),
+                ],
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/employee_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Employee Laid Off",
+                                className="text-[14px] text-[#7DB2BF]",
+                            ),
+                            html.H3(
+                                f"{total_employee_layoffs:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/company_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Company",
+                                className="text-[14px] text-[#C1AB7B]",
+                            ),
+                            html.H3(
+                                f"{total_companies:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/country_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Country",
+                                className="text-[14px] text-[#FAA743]",
+                            ),
+                            html.H3(
+                                f"{total_countries:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+        ],
+        id="statistics",
+        className="justify-left mb-2 px-8",
+    )
 
     # Tambahkan treemap
     treemap = html.Div(
@@ -36,90 +141,7 @@ def create_layout(df, available_years, available_industries, available_countries
         className="w-7/12",
     )
 
-    layout = html.Div(
-        [
-            # Header
-            create_header(),
-            # Main Content
-            html.Div(
-                [
-                    # KPI Cards
-                    html.Div(id="statistics"),
-                    # Main content section
-                    html.Div(
-                        [
-                            # Visualizations
-                            html.Div(
-                                [
-                                    # Tabs for visualizations
-                                    html.Div(
-                                        [
-                                            # Tab content
-                                            html.Div(
-                                                [
-                                                    html.Div(
-                                                        [
-                                                            html.Div(
-                                                                [
-                                                                    html.Div(
-                                                                        dcc.Graph(
-                                                                            id="country-map"
-                                                                        ),
-                                                                        className="rounded-lg shadow-custom card-hover p-2 bg-[#ffffff] mb-6 w-2/3",
-                                                                    ),
-                                                                    html.Div(
-                                                                        [
-                                                                            create_filters(
-                                                                                available_years,
-                                                                                available_industries,
-                                                                                available_countries,
-                                                                            ),
-                                                                        ],
-                                                                        className="px-2 w-1/4",
-                                                                    ),
-                                                                ],
-                                                                className="flex flex-wrap justify-center gap-4",
-                                                            ),
-                                                            html.Div(
-                                                                [
-                                                                    html.Div(
-                                                                        dcc.Graph(
-                                                                            id="layoffs-trend"
-                                                                        ),
-                                                                        className="rounded-lg shadow-custom card-hover bg-[#1F1F43] mb-6 w-5/12",
-                                                                    ),
-                                                                    treemap,
-                                                                ],
-                                                                className="flex flex-wrap justify-center w-full",
-                                                            ),
-                                                        ],
-                                                        id="tab-1-content",
-                                                        className="w-full",
-                                                    ),
-                                                ],
-                                                id="tabs-content",
-                                            ),
-                                        ],
-                                        id="tabs",
-                                    ),
-                                ],
-                                className="w-full px-2",
-                            ),
-                        ],
-                        className="flex flex-wrap -mx-2",
-                    ),
-                    # Footer
-                    create_footer(),
-                ],
-                className="container mx-auto px-4",
-            ),
-            # Store untuk menyimpan state filter
-            dcc.Store(id="filter-store"),
-            dcc.Store(id="active-tab", data="tab-1"),
-        ],
-        className="min-h-screen bg-[#05050F]",
-    )
-
+    # Layout utama
     layout = html.Div(
         [
             # Header
@@ -128,7 +150,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 [
                     html.Div(
                         [
-                            html.Div(id="statistics"),
+                            statistics,
                             html.Div(
                                 [
                                     create_filters(

@@ -6,7 +6,6 @@ from components.visualizations import (
     create_country_map,
     create_treemap,
 )
-from components.ui import create_kpi_cards
 from components.data_processor import apply_filters
 
 
@@ -37,24 +36,6 @@ def register_callbacks(app, df):
 
         years = list(range(year_range[0], year_range[1] + 1))
         return {"years": years, "industries": industries, "countries": countries}
-
-    # Callback untuk update KPI cards
-    @app.callback(
-        Output("statistics", "children"),
-        [Input("filter-store", "data")],
-        prevent_initial_call=False,
-    )
-    def update_kpi_cards(filter_data):
-        """Update KPI cards berdasarkan filter"""
-        if filter_data is None:
-            # Default KPI cards with all data
-            return create_kpi_cards(df)
-
-        years = filter_data.get("years", None)
-        industries = filter_data.get("industries", None)
-        countries = filter_data.get("countries", None)
-
-        return create_kpi_cards(df, years, industries, countries)
 
     # # Callback untuk update filtered data stats
     # @app.callback(
