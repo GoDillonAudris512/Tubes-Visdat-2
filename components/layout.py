@@ -15,35 +15,143 @@ def create_layout(df, available_years, available_industries, available_countries
     Returns:
         Component: Layout utama aplikasi
     """
+    # Calculate metrics
+    total_records = len(df)
+    total_employee_layoffs = int(df["total_laid_off"].sum())
+    total_companies = df["company"].nunique()
+    total_countries = df["country"].nunique()
 
-    # Card untuk Layoffs Trend
+    # Tambahkan statistik
+    statistics = html.Div(
+        [
+            html.Div(
+                [
+                    html.H2(
+                        "General Statistics",
+                        className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold",
+                    ),
+                    html.Hr(className="my-2 border-[#fffff]"),
+                    html.H3(
+                        f"{total_records:,}",
+                        className="text-4xl text-white mt-2",
+                    ),
+                    html.H6(
+                        "Number of Layoffs",
+                        className="text-[12px] text-white mt-1",
+                    ),
+                ],
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/employee_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Employee Laid Off",
+                                className="text-[14px] text-[#7DB2BF]",
+                            ),
+                            html.H3(
+                                f"{total_employee_layoffs:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/company_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Company",
+                                className="text-[14px] text-[#C1AB7B]",
+                            ),
+                            html.H3(
+                                f"{total_companies:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+            html.Div(
+                [
+                    html.Div(
+                        html.Img(
+                            src="assets/country_icon.png",
+                            className="h-12 w-auto",
+                        ),
+                        className="flex-shrink-0",
+                    ),
+                    html.Div(
+                        [
+                            html.H6(
+                                "Country",
+                                className="text-[14px] text-[#FAA743]",
+                            ),
+                            html.H3(
+                                f"{total_countries:,}",
+                                className="text-2xl text-white",
+                            ),
+                        ],
+                        className="flex-col ml-3 items-center justify-center",
+                    ),
+                ],
+                className="flex justify-left items-center pt-4",
+            ),
+        ],
+        id="statistics",
+        className="justify-left mb-2 px-8",
+    )
+
+    # Card untuk Country Map (tanpa judul di dalamnya)
+    country_map_card = html.Div(
+        [
+            dcc.Graph(
+                id="country-map",
+                className="w-full rounded-lg",
+            ),
+        ],
+        className="w-full mb-6 bg-[#1F1F43] rounded-lg shadow-custom card-hover",
+    )
+
+    # Card untuk Layoffs Trend (tanpa judul di dalamnya)
     layoffs_trend_card = html.Div(
         [
-            html.H3(
-                "Tren Lay-Off dari Waktu ke Waktu",
-                className="text-2xl font-bold text-[#E4A959] px-4 mb-2",
-            ),
             dcc.Graph(
                 id="layoffs-trend",
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-1/2 bg-[#1F1F43] rounded-lg shadow-custom card-hover p-6 mx-2",
+        className="w-1/2 bg-[#1F1F43] rounded-lg shadow-custom card-hover mx-2",
     )
 
-    # Card untuk Treemap
+    # Card untuk Treemap (tanpa judul di dalamnya)
     treemap_card = html.Div(
         [
-            html.H3(
-                "Proposi Lay-Off",
-                className="text-2xl font-bold text-[#E4A959] px-4 mb-2",
-            ),
             dcc.Graph(
                 id="treemap-chart",
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-1/2 bg-[#1F1F43] rounded-lg shadow-custom card-hover p-6 mx-2",
+        className="w-1/2 flex  bg-[#1F1F43] rounded-lg shadow-custom card-hover mx-2",
     )
 
     layout = html.Div(
@@ -54,7 +162,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 [
                     html.Div(
                         [
-                            html.Div(id="statistics"),
+                            statistics,
                             html.Div(
                                 [
                                     create_filters(
@@ -70,9 +178,30 @@ def create_layout(df, available_years, available_industries, available_countries
                     ),
                     html.Div(
                         [
+                            # Judul di luar card country map
                             html.Div(
-                                dcc.Graph(id="country-map"),
-                                className="w-full mb-6",
+                                [
+                                    html.Div(
+                                        "Layoff Rate Around the World",
+                                        className="text-2xl font-bold text-[#6DB4CF] mb-2 text-left w-full px-2",
+                                    ),
+                                ],
+                                className="flex flex-row w-full justify-between items-end",
+                            ),
+                            country_map_card,
+                            # Judul di luar card tren dan treemap
+                            html.Div(
+                                [
+                                    html.Div(
+                                        "Tren Lay-Off dari Waktu ke Waktu",
+                                        className="text-2xl font-bold text-[#B0AD8B] mb-2 text-left w-1/2 px-2",
+                                    ),
+                                    html.Div(
+                                        "Proposi Lay-Off",
+                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-1/2 px-2",
+                                    ),
+                                ],
+                                className="flex flex-row w-full justify-between items-end",
                             ),
                             html.Div(
                                 [
