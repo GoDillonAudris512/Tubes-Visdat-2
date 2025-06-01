@@ -114,7 +114,11 @@ def create_country_map(
     # Group by country
     country_data = (
         filtered_df.groupby("country")
-        .agg(percentage_layoffs=("percentage_laid_off", "mean"), total_layoffs=("total_laid_off", "sum"), companies=("company", "nunique"))
+        .agg(
+            percentage_layoffs=("percentage_laid_off", "mean"),
+            total_layoffs=("total_laid_off", "sum"),
+            companies=("company", "nunique"),
+        )
         .reset_index()
     )
 
@@ -122,7 +126,7 @@ def create_country_map(
         "#FFD6D6",  # sangat terang
         "#FF9999",
         "#FF4D4D",
-        "#FF2D2E"   # warna dasar
+        "#FF2D2E",  # warna dasar
     ]
 
     # Create figure
@@ -135,8 +139,12 @@ def create_country_map(
         hover_data=["percentage_layoffs", "total_layoffs", "companies"],
         color_continuous_scale=custom_colorscale,
         projection="natural earth",
-        title="Layoff Rate Around the World",
-        labels={"country": "Country", "percentage_layoffs": "Layoffs Rate (%)", "total_layoffs": "Total Layoffs",  "companies": "Number of Company"},
+        labels={
+            "country": "Country",
+            "percentage_layoffs": "Layoffs Rate (%)",
+            "total_layoffs": "Total Layoffs",
+            "companies": "Number of Company",
+        },
     )
 
     # Customize layout
@@ -148,17 +156,22 @@ def create_country_map(
             "yanchor": "top",
             "font": dict(size=24, color="#ffffff"),
         },
-        geo=dict(showframe=False, showcoastlines=True, bgcolor='#1F1F43'),
+        geo=dict(
+            showframe=False,
+            showcoastlines=True,
+            bgcolor="#1F1F43",
+            projection_scale=1.2,  # perbesar globe
+            center=dict(lat=10, lon=0),  # geser agar map lebih tengah
+        ),
         coloraxis_colorbar=dict(
             title="Total<br>Layoffs<br>(%)",
             thickness=15,
             len=0.5,
         ),
         margin=dict(l=20, r=20, t=20, b=0),
-        paper_bgcolor='#1F1F43',
-        plot_bgcolor='#1F1F43', 
-        font_color='white',
-
+        paper_bgcolor="#1F1F43",
+        plot_bgcolor="#1F1F43",
+        font_color="white",
     )
 
     return fig
@@ -300,10 +313,18 @@ def create_treemap(
 
     # Customize layout
     fig.update_layout(
-        margin=dict(l=5, r=5, t=5, b=5),
+        margin=dict(l=1, r=1, t=0, b=1),  # Buat margin sekecil mungkin, t=0
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         template="none",
+        uniformtext_minsize=8,  # Perkecil minsize text
+        uniformtext_mode="hide",
+    )
+
+    # Update traces untuk mengontrol font dan posisi teks lebih detail
+    fig.update_traces(
+        textfont_size=10,  # Ukuran font untuk semua label di treemap
+        selector=dict(type="treemap"),
     )
 
     for d in fig.data:
