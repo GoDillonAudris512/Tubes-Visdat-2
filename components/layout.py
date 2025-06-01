@@ -1,5 +1,5 @@
-from dash import html, dcc, dash_table
-from components.ui import create_header, create_filters, create_footer
+from dash import html, dcc
+from components.ui import create_filters
 
 
 def create_layout(df, available_years, available_industries, available_countries):
@@ -15,6 +15,49 @@ def create_layout(df, available_years, available_industries, available_countries
     Returns:
         Component: Layout utama aplikasi
     """
+    # Header layout
+    header = html.Nav(
+        [
+            html.Div(
+                [
+                    html.Div(
+                        [
+                            html.Div(
+                                html.H1(
+                                    "Global Layoffs Phenomenons",
+                                    className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
+                                ),
+                                className="mr-2",
+                            ),
+                            html.Div(
+                                html.Img(
+                                    src="https://img.icons8.com/fluency/48/null/organization-chart-people.png",
+                                    className="h-10 w-auto",
+                                ),
+                                className="flex-shrink-0",
+                            ),
+                        ],
+                        className="flex justify-left items-center",
+                    ),
+                    html.H6(
+                        "Explore global layoff trends since 2021 — uncover which countries and industries were hit hardest, how patterns evolved over time, and the scale of their impact.",
+                        className="text-sm text-white",
+                    )
+                ],
+                className="px-8 w-full",
+            ),
+            html.Div(
+                html.A(
+                    "Data Source",
+                    href="https://www.kaggle.com/datasets/swaptr/layoffs-2022",
+                    className="text-white font-semibold text-sm", 
+                ),
+                className="w-40 px-2 py-1 rounded-lg flex justify-center items-center text-center h-1/2 border-white border-2 bg-[#1F1F43] hover:bg-[#2A2A5C] transition duration-300",
+            )
+        ],
+        className="flex flex-row py-2 bg-black mr-8 items-center",
+    )
+
     # Calculate metrics
     total_records = len(df)
     total_employee_layoffs = int(df["total_laid_off"].sum())
@@ -129,7 +172,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-full mb-6 bg-[#1F1F43] rounded-lg shadow-custom card-hover",
+        className="w-full mb-6 bg-[#1F1F43] rounded-lg shadow-custom card-hover mr-8",
     )
 
     # Card untuk Layoffs Trend (tanpa judul di dalamnya)
@@ -157,7 +200,7 @@ def create_layout(df, available_years, available_industries, available_countries
     layout = html.Div(
         [
             # Header
-            create_header(),
+            header,
             html.Div(
                 [
                     html.Div(
@@ -183,44 +226,50 @@ def create_layout(df, available_years, available_industries, available_countries
                                 [
                                     html.Div(
                                         "Layoff Rate Around the World",
-                                        className="text-2xl font-bold text-[#6DB4CF] mb-2 text-left w-full px-2",
+                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-full px-2",
                                     ),
                                 ],
-                                className="flex flex-row w-full justify-between items-end",
+                                className="flex flex-row w-full justify-between items-end pr-8",
                             ),
-                            country_map_card,
+                            html.Div(
+                                [
+                                    # Card untuk Country Map
+                                    country_map_card,
+                                ],
+                                className="flex flex-row w-full justify-between items-stretch pr-4",
+                            ),
                             # Judul di luar card tren dan treemap
                             html.Div(
                                 [
                                     html.Div(
-                                        "Tren Lay-Off dari Waktu ke Waktu",
-                                        className="text-2xl font-bold text-[#B0AD8B] mb-2 text-left w-1/2 px-2",
+                                        "Timely Layoffs Trend",
+                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-1/2 px-2",
                                     ),
                                     html.Div(
-                                        "Proposi Lay-Off",
+                                        "Layoffs Proportion by Industry",
                                         className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-1/2 px-2",
                                     ),
                                 ],
-                                className="flex flex-row w-full justify-between items-end",
+                                className="flex flex-row w-full justify-between items-end pr-6",
                             ),
                             html.Div(
                                 [
                                     layoffs_trend_card,
                                     treemap_card,
                                 ],
-                                className="flex flex-row w-full justify-between items-stretch mb-6",
+                                className="flex flex-row w-full justify-between items-stretch mb-6 pr-6",
                             ),
                         ],
-                        className="w-4/5 h-screen overflow-y-scroll",
+                        className="w-4/5 h-[88vh] overflow-y-scroll",
                     ),
                 ],
-                className="flex w-full pt-4",
+                className="flex w-full py-4 max-h-screen",
             ),
             # Store untuk menyimpan state filter
             dcc.Store(id="filter-store"),
             dcc.Store(id="active-tab", data="tab-1"),
         ],
-        className="bg-[#05050F] h-screen",
+        className="bg-[#05050F] h-auto",
     )
 
     return layout

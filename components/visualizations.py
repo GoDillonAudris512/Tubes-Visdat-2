@@ -45,7 +45,7 @@ def create_layoffs_trend(
             y=monthly_data["total_layoffs"],
             mode="lines+markers",
             name="Total Layoffs",
-            line=dict(color="#FF5A5F", width=3),
+            line=dict(color="#FF2D2E", width=3),
             marker=dict(size=8),
         ),
         secondary_y=False,
@@ -56,8 +56,8 @@ def create_layoffs_trend(
         go.Bar(
             x=monthly_data["year_month_date"],
             y=monthly_data["companies"],
-            name="Jumlah Perusahaan",
-            marker=dict(color="#ffffff", opacity=0.7),
+            name="Total Companies",
+            marker=dict(color="#FFA63E", opacity=0.6),
         ),
         secondary_y=True,
     )
@@ -75,15 +75,15 @@ def create_layoffs_trend(
 
     # Set y-axes titles
     fig.update_yaxes(
-        title_text="Total Karyawan yang di-PHK", secondary_y=False, gridcolor="#EAEAEA"
+        title_text="Total Layoffs", secondary_y=False, gridcolor="#808080"
     )
     fig.update_yaxes(
-        title_text="Jumlah Perusahaan", secondary_y=True, gridcolor="#EAEAEA"
+        title_text="Total Companies", secondary_y=True, gridcolor="#808080"
     )
 
     # Update x-axis
     fig.update_xaxes(
-        tickformat="%b %Y", tickangle=-45, gridcolor="#EAEAEA", title_text="Bulan"
+        tickformat="%b %Y", tickangle=-45, gridcolor="#808080", title_text="Months"
     )
 
     return fig
@@ -138,6 +138,7 @@ def create_country_map(
         hover_name="country",
         hover_data=["percentage_layoffs", "total_layoffs", "companies"],
         color_continuous_scale=custom_colorscale,
+        range_color=(0, 100),
         projection="natural earth",
         labels={
             "country": "Country",
@@ -164,9 +165,16 @@ def create_country_map(
             center=dict(lat=10, lon=0),  # geser agar map lebih tengah
         ),
         coloraxis_colorbar=dict(
-            title="Total<br>Layoffs<br>(%)",
+            title=dict(
+                text="Layoff<br>Rate<br>(%)<br>",
+                font=dict(size=14, color="#ffffff"),
+            ),
             thickness=15,
-            len=0.5,
+            len=0.8,
+            x=1.02,
+            xanchor="left",
+            y=0.5,
+            yanchor="middle",
         ),
         margin=dict(l=20, r=20, t=20, b=0),
         paper_bgcolor="#1F1F43",

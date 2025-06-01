@@ -1,44 +1,6 @@
 from dash import html, dcc
 from components.data_processor import apply_filters
 
-def create_header():
-    """
-    Membuat komponen header aplikasi
-
-    Returns:
-        Component: Komponen Dash header
-    """
-    header = html.Nav(
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.Div(
-                            html.H1(
-                                "Global Layoffs Phenomenons",
-                                className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
-                            ),
-                            className="mr-2",
-                        ),
-                        html.Div(
-                            html.Img(
-                                src="https://img.icons8.com/fluency/48/null/organization-chart-people.png",
-                                className="h-10 w-auto",
-                            ),
-                            className="flex-shrink-0",
-                        ),
-                    ],
-                    className="flex justify-left items-center",
-                ),
-            ],
-            className="container px-8 w-full",
-        ),
-        className="py-3 bg-black",
-    )
-
-    return header
-
-
 def create_filters(available_years, available_industries, available_countries):
     """
     Membuat komponen filter
@@ -54,13 +16,13 @@ def create_filters(available_years, available_industries, available_countries):
     filters = html.Div(
         html.Div(
             [
-                html.H4("Filter Data", className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-2"),
+                html.H4("Filter Data", className="text-2xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-2"),
                 html.Hr(className="mb-4"),
                 # Year Filter
                 html.Div(
                     [
                         html.Label(
-                            "Pilih Tahun:", className="block text-sm font-medium mb-1"
+                            "Select Year:", className="block text-sm font-medium mb-1"
                         ),
                         dcc.RangeSlider(
                             id="year-slider",
@@ -78,7 +40,7 @@ def create_filters(available_years, available_industries, available_countries):
                 html.Div(
                     [
                         html.Label(
-                            "Pilih Industri:",
+                            "Choose Industry:",
                             className="block text-sm font-medium mb-1",
                         ),
                         dcc.Dropdown(
@@ -87,7 +49,7 @@ def create_filters(available_years, available_industries, available_countries):
                                 {"label": i, "value": i} for i in available_industries
                             ],
                             multi=True,
-                            placeholder="Pilih industri...",
+                            placeholder="Choose industry...",
                             className="mb-1 text-[#1F1F43]",
 
                         ),
@@ -98,7 +60,7 @@ def create_filters(available_years, available_industries, available_countries):
                 html.Div(
                     [
                         html.Label(
-                            "Pilih Negara:", className="block text-sm font-medium mb-1"
+                            "Choose Country:", className="block text-sm font-medium mb-1"
                         ),
                         dcc.Dropdown(
                             id="country-dropdown",
@@ -106,7 +68,7 @@ def create_filters(available_years, available_industries, available_countries):
                                 {"label": c, "value": c} for c in available_countries
                             ],
                             multi=True,
-                            placeholder="Pilih negara...",
+                            placeholder="Choose country...",
                             className="mb-1 text-[#1F1F43]",
                         ),
                     ],
@@ -116,7 +78,7 @@ def create_filters(available_years, available_industries, available_countries):
                 html.Div(
                     [
                         html.Button(
-                            "Terapkan Filter",
+                            "Apply Filters",
                             id="apply-filter-btn",
                             className="bg-[#4DC0F4] hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full",
                         ),
