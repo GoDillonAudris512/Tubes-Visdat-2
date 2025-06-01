@@ -327,8 +327,34 @@ def create_treemap(
                     }
                 )
 
-    # Buat DataFrame dari list
-    treemap_data = pd.DataFrame(treemap_rows)
+    # Buat DataFrame dari list dengan kolom yang eksplisit
+    treemap_data = pd.DataFrame(
+        treemap_rows,
+        columns=["industry", "company", "total_layoffs", "country", "color"],
+    )
+
+    # Handle kasus data kosong
+    if treemap_data.empty:
+        fig = go.Figure()
+        fig.update_layout(
+            paper_bgcolor="#1F1F43",
+            plot_bgcolor="#1F1F43",
+            margin=dict(l=1, r=1, t=0, b=1),
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            annotations=[
+                dict(
+                    text="No data for current filter",
+                    x=0.5,
+                    y=0.5,
+                    xref="paper",
+                    yref="paper",
+                    showarrow=False,
+                    font=dict(size=14, color="#FFFFFF"),
+                )
+            ],
+        )
+        return fig
 
     # Create figure
     fig = px.treemap(
