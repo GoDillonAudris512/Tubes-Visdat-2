@@ -42,6 +42,7 @@ def get_filter_options(df):
     available_years = sorted(df["year"].dropna().unique())
     available_industries = sorted(df["industry"].dropna().unique())
     available_countries = sorted(df["country"].dropna().unique())
+    available_countries.insert(0,"Non-US")
 
     return available_years, available_industries, available_countries
 
@@ -72,6 +73,11 @@ def apply_filters(df, years=None, industries=None, countries=None):
         filtered_df = filtered_df[filtered_df["industry"].isin(industries)]
 
     if countries and countries != []:
-        filtered_df = filtered_df[filtered_df["country"].isin(countries)]
+        if ("Non-US" in countries and "United States" not in countries):
+            filtered_df = filtered_df.query("country != 'United States'")
+        elif ("Non-US" in countries and "United States" in countries):
+            filtered_df = filtered_df
+        else:
+            filtered_df = filtered_df[filtered_df["country"].isin(countries)]
 
     return filtered_df
