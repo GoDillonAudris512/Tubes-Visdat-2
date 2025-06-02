@@ -1,5 +1,7 @@
 from dash import html, dcc
 from components.data_processor import apply_filters
+from components.colors import Colors
+
 
 def create_filters(available_years, available_industries, available_countries):
     """
@@ -16,7 +18,10 @@ def create_filters(available_years, available_industries, available_countries):
     filters = html.Div(
         html.Div(
             [
-                html.H4("Filter Data", className="text-2xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold mb-2"),
+                html.H4(
+                    "Filter Data",
+                    className=f"text-2xl bg-gradient-to-r from-[{Colors.GRADIENT_BLUE_START}] to-[{Colors.GRADIENT_BLUE_END}] bg-clip-text text-transparent font-bold mb-2",
+                ),
                 html.Hr(className="mb-4"),
                 # Year Filter
                 html.Div(
@@ -50,8 +55,7 @@ def create_filters(available_years, available_industries, available_countries):
                             ],
                             multi=True,
                             placeholder="Choose industry...",
-                            className="mb-1 text-[#1F1F43]",
-
+                            className=f"mb-1 text-[{Colors.BG_CARD}]",
                         ),
                     ],
                     className="mb-4",
@@ -60,7 +64,8 @@ def create_filters(available_years, available_industries, available_countries):
                 html.Div(
                     [
                         html.Label(
-                            "Choose Country:", className="block text-sm font-medium mb-1"
+                            "Choose Country:",
+                            className="block text-sm font-medium mb-1",
                         ),
                         dcc.Dropdown(
                             id="country-dropdown",
@@ -69,7 +74,7 @@ def create_filters(available_years, available_industries, available_countries):
                             ],
                             multi=True,
                             placeholder="Choose country...",
-                            className="mb-1 text-[#1F1F43]",
+                            className=f"mb-1 text-[{Colors.BG_CARD}]",
                         ),
                     ],
                     className="mb-4",
@@ -80,7 +85,7 @@ def create_filters(available_years, available_industries, available_countries):
                         html.Button(
                             "Apply Filters",
                             id="apply-filter-btn",
-                            className="bg-[#4DC0F4] hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full",
+                            className=f"bg-[{Colors.BUTTON_PRIMARY}] hover:bg-{Colors.BUTTON_PRIMARY_HOVER} text-white font-bold py-2 px-4 rounded w-full",
                         ),
                         html.Div(id="filtered-data-stats", className="mt-3"),
                     ]
@@ -92,6 +97,7 @@ def create_filters(available_years, available_industries, available_countries):
     )
 
     return filters
+
 
 def create_footer():
     """

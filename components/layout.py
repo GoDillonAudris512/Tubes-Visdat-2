@@ -1,5 +1,6 @@
 from dash import html, dcc
 from components.ui import create_filters
+from components.colors import Colors
 
 
 def create_layout(df, available_years, available_industries, available_countries):
@@ -25,7 +26,7 @@ def create_layout(df, available_years, available_industries, available_countries
                             html.Div(
                                 html.H1(
                                     "Global Layoffs Phenomenons",
-                                    className="text-3xl font-bold bg-gradient-to-r from-[#4CB6F0] to-[#FFA63E] bg-clip-text text-transparent py-1",
+                                    className=f"text-3xl font-bold bg-gradient-to-r from-[{Colors.GRADIENT_ORANGE_START}] to-[{Colors.GRADIENT_ORANGE_END}] bg-clip-text text-transparent py-1",
                                 ),
                                 className="mr-2",
                             ),
@@ -42,20 +43,20 @@ def create_layout(df, available_years, available_industries, available_countries
                     html.H6(
                         "Explore global layoff trends since 2021 — uncover which countries and industries were hit hardest, how patterns evolved over time, and the scale of their impact.",
                         className="text-sm text-white",
-                    )
+                    ),
                 ],
-                className="px-8 w-full",
+                className="px-4 w-full flex-1",
             ),
             html.Div(
                 html.A(
                     "Data Source",
                     href="https://www.kaggle.com/datasets/swaptr/layoffs-2022",
-                    className="text-white font-semibold text-sm", 
+                    className="text-white font-semibold text-sm",
                 ),
-                className="w-40 px-2 py-1 rounded-lg flex justify-center items-center text-center h-1/2 border-white border-2 bg-[#1F1F43] hover:bg-[#2A2A5C] transition duration-300",
-            )
+                className=f"w-32 px-2 py-1 rounded-lg flex justify-center items-center text-center border-white border-2 bg-[{Colors.BG_CARD}] hover:bg-[{Colors.BG_BUTTON_HOVER}] transition duration-300 flex-shrink-0",
+            ),
         ],
-        className="flex flex-row py-2 bg-black mr-8 items-center",
+        className="flex flex-row py-2 bg-black px-4 items-center justify-between",
     )
 
     # Calculate metrics
@@ -71,7 +72,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 [
                     html.H2(
                         "General Statistics",
-                        className="text-xl bg-gradient-to-r from-[#4CB6F0] to-[#5D9DB8] bg-clip-text text-transparent font-bold",
+                        className=f"text-xl bg-gradient-to-r from-[{Colors.GRADIENT_BLUE_START}] to-[{Colors.GRADIENT_BLUE_END}] bg-clip-text text-transparent font-bold",
                     ),
                     html.Hr(className="my-2 border-[#fffff]"),
                     html.H3(
@@ -97,7 +98,7 @@ def create_layout(df, available_years, available_industries, available_countries
                         [
                             html.H6(
                                 "Employee Laid Off",
-                                className="text-[14px] text-[#7DB2BF]",
+                                className=f"text-[14px] text-[{Colors.STAT_EMPLOYEE}]",
                             ),
                             html.H3(
                                 f"{total_employee_layoffs:,}",
@@ -122,7 +123,7 @@ def create_layout(df, available_years, available_industries, available_countries
                         [
                             html.H6(
                                 "Company",
-                                className="text-[14px] text-[#C1AB7B]",
+                                className=f"text-[14px] text-[{Colors.STAT_COMPANY}]",
                             ),
                             html.H3(
                                 f"{total_companies:,}",
@@ -147,7 +148,7 @@ def create_layout(df, available_years, available_industries, available_countries
                         [
                             html.H6(
                                 "Country",
-                                className="text-[14px] text-[#FAA743]",
+                                className=f"text-[14px] text-[{Colors.STAT_COUNTRY}]",
                             ),
                             html.H3(
                                 f"{total_countries:,}",
@@ -161,7 +162,7 @@ def create_layout(df, available_years, available_industries, available_countries
             ),
         ],
         id="statistics",
-        className="justify-left mb-2 px-8",
+        className="justify-left mb-2 px-4",
     )
 
     # Card untuk Country Map (tanpa judul di dalamnya)
@@ -172,7 +173,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-full mb-6 bg-[#1F1F43] rounded-lg shadow-custom card-hover mr-8",
+        className=f"w-full mb-6 bg-[{Colors.BG_CARD}] rounded-lg shadow-custom card-hover",
     )
 
     # Card untuk Layoffs Trend (tanpa judul di dalamnya)
@@ -183,7 +184,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-1/2 bg-[#1F1F43] rounded-lg shadow-custom card-hover mx-2",
+        className=f"w-1/2 bg-[{Colors.BG_CARD}] rounded-lg shadow-custom card-hover mr-2",
     )
 
     # Card untuk Treemap (tanpa judul di dalamnya)
@@ -194,7 +195,7 @@ def create_layout(df, available_years, available_industries, available_countries
                 className="w-full rounded-lg",
             ),
         ],
-        className="w-1/2 flex  bg-[#1F1F43] rounded-lg shadow-custom card-hover mx-2",
+        className=f"w-1/2 bg-[{Colors.BG_CARD}] rounded-lg shadow-custom card-hover ml-2",
     )
 
     layout = html.Div(
@@ -214,10 +215,10 @@ def create_layout(df, available_years, available_industries, available_countries
                                         available_countries,
                                     ),
                                 ],
-                                className="w-full px-4",
+                                className="w-full px-2",
                             ),
                         ],
-                        className="w-1/5",
+                        className="w-1/5 min-w-0 overflow-y-auto max-h-[88vh] pb-4",
                     ),
                     html.Div(
                         [
@@ -226,50 +227,50 @@ def create_layout(df, available_years, available_industries, available_countries
                                 [
                                     html.Div(
                                         "Layoff Rate Around the World",
-                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-full px-2",
+                                        className=f"text-2xl font-bold text-[{Colors.SECTION_TITLE}] mb-2 text-left w-full px-2",
                                     ),
                                 ],
-                                className="flex flex-row w-full justify-between items-end pr-8",
+                                className="flex flex-row w-full justify-between items-end",
                             ),
                             html.Div(
                                 [
                                     # Card untuk Country Map
                                     country_map_card,
                                 ],
-                                className="flex flex-row w-full justify-between items-stretch pr-4",
+                                className="flex flex-row w-full justify-between items-stretch px-2",
                             ),
                             # Judul di luar card tren dan treemap
                             html.Div(
                                 [
                                     html.Div(
                                         "Timely Layoffs Trend",
-                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-1/2 px-2",
+                                        className=f"text-2xl font-bold text-[{Colors.SECTION_TITLE}] mb-2 text-left w-1/2 px-2",
                                     ),
                                     html.Div(
                                         "Layoffs Proportion by Industry",
-                                        className="text-2xl font-bold text-[#E4A959] mb-2 text-left w-1/2 px-2",
+                                        className=f"text-2xl font-bold text-[{Colors.SECTION_TITLE}] mb-2 text-left w-1/2 px-2",
                                     ),
                                 ],
-                                className="flex flex-row w-full justify-between items-end pr-6",
+                                className="flex flex-row w-full justify-between items-end",
                             ),
                             html.Div(
                                 [
                                     layoffs_trend_card,
                                     treemap_card,
                                 ],
-                                className="flex flex-row w-full justify-between items-stretch mb-6 pr-6",
+                                className="flex flex-row w-full items-stretch mb-6 px-2",
                             ),
                         ],
-                        className="w-4/5 h-[88vh] overflow-y-scroll",
+                        className="w-4/5 h-[88vh] overflow-y-auto overflow-x-hidden min-w-0 flex-1",
                     ),
                 ],
-                className="flex w-full py-4 max-h-screen",
+                className="flex w-full py-4 gap-4 min-h-0",
             ),
             # Store untuk menyimpan state filter
             dcc.Store(id="filter-store"),
             dcc.Store(id="active-tab", data="tab-1"),
         ],
-        className="bg-[#05050F] h-auto",
+        className=f"bg-[{Colors.BG_MAIN}] h-screen overflow-hidden",
     )
 
     return layout
