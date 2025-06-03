@@ -353,12 +353,15 @@ def create_treemap(
 
     # Customize layout
     fig.update_layout(
-        margin=dict(l=1, r=1, t=0, b=1),
+        margin=dict(l=1, r=1, t=1, b=1),
         paper_bgcolor=Colors.TRANSPARENT,
         plot_bgcolor=Colors.TRANSPARENT,
         uniformtext_minsize=8,
         uniformtext_mode="hide",
         font_color=Colors.TEXT_WHITE,
+        autosize=True,
+        height=500,
+        width=None,
     )
 
     # Update traces untuk mengontrol font dan posisi teks lebih detail
@@ -383,8 +386,36 @@ def create_treemap(
         selector=dict(type="treemap"),
     )
 
+    # Ubah teks untuk menampilkan hanya 3 huruf pertama nama company
+    for i, trace in enumerate(fig.data):
+        if hasattr(trace, "labels") and trace.labels is not None:
+            new_text = []
+            for label in trace.labels:
+                if label in treemap_data["company"].values:
+                    # Ambil 3 huruf pertama dari nama company
+                    new_text.append(label[:4].upper())
+                else:
+                    # Tetap tampilkan nama industri utuh
+                    new_text.append(label)
+            trace.text = new_text
+
     for d in fig.data:
         if hasattr(d, "marker"):
             d.marker.line = dict(color=Colors.BORDER_WHITE, width=0.5)
+
+    # Ganti teks default → 3 huruf pertama (sudah dilakukan di loop sebelumnya)
+    # Sekarang posisikan di tengah & perbesar font
+    fig.update_traces(
+        texttemplate="<b>%{text}</b><br><span style='font-size:12px'>%{percentParent:.1%}</span>",  # bold + persentase
+        textposition="middle center",  # pusat kotak
+        textfont_size=10,  # sedikit lebih besar
+        selector=dict(type="treemap"),
+    )
+
+    # (opsional) pastikan label industri tetap muncul normal & cukup besar
+    fig.update_traces(
+        textfont_size=10,
+        selector=lambda tr: tr.ids is not None and any("/" not in i for i in tr.ids),
+    )
 
     return fig
