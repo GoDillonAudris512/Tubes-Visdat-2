@@ -41,7 +41,7 @@ def create_layout(df, available_years, available_industries, available_countries
                         className="flex justify-left items-center",
                     ),
                     html.H6(
-                        "Explore global layoff trends since 2021 — uncover which countries and industries were hit hardest, how patterns evolved over time, and the scale of their impact.",
+                        "Explore global layoff trends since 2020 — uncover which countries and industries were hit hardest, how patterns evolved over time, and the scale of their impact.",
                         className="text-sm text-white",
                     ),
                 ],
